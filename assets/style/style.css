@@ -20,7 +20,7 @@ body {
     padding: 10px;
     background-color: rgba(0, 0, 0, 0.5);
     color: var(--tertiary);
-    font-size: 72px;
+    font-size: 100px;
     text-align: center;
 }
 
@@ -41,35 +41,64 @@ body {
 
 .search h2 {
     display: table;
-    margin: 100 0 0 0;
+    margin-left: auto;
+    margin-right: auto;
     padding: 3px;
     background-color: rgba(0, 0, 0, 0.5);
     color: var(--tertiary);
-    font-size: 32px;
+    font-size: 48px;
+    text-align: center;
+    border-color: var(--tertiary);
+    border-radius: 10px 10px 10px 10px;
+    border-style: solid;
+    border-width: 1px;
 }
 
 input {
+    background-color: var(--fourth);
     width: 225px;
-    height: 30px
+    height: 30px;
+    display: block;
+    align-items: center;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    border-color: var(--tertiary);
+    border-style: solid;
+    border-width: 1px;
+   
 }
 
 input::placeholder {
+    color: var(--primary);
+    
+}
+
+input[type=text]:focus{
+    background-color: var(--primary);
     color: var(--fourth);
 }
 
 button {
-    color: var(--fourth);
+    color: var(--primary);
+    background-color: var(--fourth);
     transition-duration: 0.4s;
     display: block;
     cursor: pointer;
     height: 30px;
     width: 112.5px;
-
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    border-color: var(--tertiary);
+    border-radius: 10px 10px 10px 10px;
+    border-style: solid;
+    border-width: 1px;
 }
 
 button:hover {
-    background-color: var(--fourth);
-    color: var(--primary);
+    background-color: var(--tertiary);
+    color: var(--fourth);
 }
 
 button:active {
@@ -83,9 +112,13 @@ button:active {
     margin-right: auto;
     padding: 3px;
     background-color: rgba(0, 0, 0, 0.5);
-    color: var(--primary);
-    font-size: 32px;
+    color: var(--tertiary);
+    font-size: 48px;
     text-align: center;
+    border-color: var(--tertiary);
+    border-radius: 10px 10px 10px 10px;
+    border-style: solid;
+    border-width: 1px;
 }
 
 .current-city h3 {
@@ -97,6 +130,10 @@ button:active {
     color: var(--tertiary);
     font-size: 48px;
     text-align: center;
+    border-color: var(--tertiary);
+    border-radius: 10px 10px 10px 10px;
+    border-style: solid;
+    border-width: 1px;
 }
 
 .forecast h3 {
@@ -108,4 +145,8 @@ button:active {
     color: var(--tertiary);
     font-size: 48px;
     text-align: center;
+    border-color: var(--tertiary);
+    border-radius: 10px 10px 10px 10px;
+    border-style: solid;
+    border-width: 1px;
 }
