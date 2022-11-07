@@ -19,13 +19,16 @@
             <div class="search">
                 <h2>Search City:</h3>
                 <input type="text" id="input" placeholder="City Name ..." size="30">
-                <button>Search Now</button>
+                <button id="search-now">Search Now</button>
             </div>
         </div>
         
         <div class="column-middle">
             <div class="current-city">
-                <h3>Current City</h3>
+                <h3 id="city">Current City</h3>
+                <p id="temp"></p>
+                <p id="wind"></p>
+                <p id="humidity"></p>
             </div>
             <div class="forecast">
                 <h3>5 Day Forecast</h3>
@@ -35,6 +38,7 @@
         <div class="column-right">
             <div class="history">
                 <h3>History</h3>
+                <p id="history-city"></p>
             </div>
         </div>
 

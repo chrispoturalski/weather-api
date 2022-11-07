@@ -1,5 +1,5 @@
 // Variables
-var API_Key = '4253ae682bded8fe54667e18d996e279'
+
 // HTML Variable
 var title = document.getElementById('title');
 var colLeft = document.getElementById('column-left');
@@ -10,9 +10,15 @@ var forecast = document.getElementById('forecast');
 var colRight = document.getElementById('column-right');
 var prevCity = document.getElementById('history');
 var input = document.querySelector('#input');
+var searchNow = document.querySelector('#search-now')
+var city = document.getElementById('#city');
+var temp = document.getElementById('#temp');
+var wind = document.getElementById('#wind');
+var humidity = document.getElementById('#humidity');
+var historyCity = document.getElementById('#history-city')
 
 input.addEventListener('keyup', function(event){
-    if(event.key === 'enter') {
+    if(event.key === 'Enter') {
         createWeatherDisplay(event.target.value)
     }
 })
@@ -31,19 +37,18 @@ for (var i = 0; i < previousSearchHistory.length; i++) {
     historyBtn.addEventListener('click', function(event) {
         createWeatherDisplay(event.target.textContent)
     })
-    document.body.appendChild(historyBtn)
 }
 
-
+var API_KEY = 'fb504c3aaa39e72e8534a9c4c32fcd83'
 
 //function to grab location from API Key
-function getGeoLocation(query, limit = 5){
+function getGeoLocation(query, limit = 5) {
     return fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${query}&limit=${limit}&appid=${API_KEY}`)
-}
+  }
 
-function getCurrentWeather({arguments}) {
-    return fetch(`https://api.openweathermap.org/data/3.0/onecall?lat=${arguments.lat}&lon=${arguments.lon}&units=${'imperial'}&appid={API_KEY}`)
-}
+  function getCurrentWeather(arguments) {
+    return fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${arguments.lat}&lon=${arguments.lon}&units=${'imperial'}&appid=${API_KEY}`)
+  }
 
 function addToHistory(location) {
     var searchHistory = localStorage.getItem('history')
@@ -64,11 +69,12 @@ function addToHistory(location) {
 
 //A function that returns a promise. The promise is a fetch to api geolocator
 function createWeatherDisplay(location){
-    getGeoLocation(location)
+    return getGeoLocation(location)
     .then(function(response) {
         return response.json()
     })
     .then(data => {
+        console.log(data)
         if (data.length === 0) {
             var errorEl = document.createElement('p')
             errorEl.textContent = `We couldn't find ${location}`
@@ -82,20 +88,21 @@ function createWeatherDisplay(location){
                 weatherPicture.src = `http://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`
                 var currentWeatherStatement = document.createElement('p')
                 currentWeatherStatement.textContent = `${weatherData.weather[0].main}: it is currently ${weatherData.weather[0].description}`
-                document.body.appendChild(weatherPicture)
-                document.appendChild(currentWeatherStatement)
+                //document.body.appendChild(weatherPicture)
+                //document.appendChild(currentWeatherStatement)
                 console.log(JSON.stringify(data, null, 2))
                 addToHistory(location)
             })
             .catch(error => {
-                console.log(error.message)
+                document.body.textContent = error.message
             })
         }
     })
     .catch(error => {
-        console.log(error.message)
+        document.body.textContent = error.message
     });
 }
+
 
 //Criteria
 // I want to see the weather outlook for multiple cities
