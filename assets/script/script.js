@@ -31,6 +31,7 @@ for (var i = 0; i < previousSearchHistory.length; i++) {
     historyBtn.addEventListener('click', function(event) {
         createWeatherDisplay(event.target.textContent)
     })
+    document.body.appendChild(historyBtn)
 }
 
 
@@ -43,18 +44,27 @@ function getGeoLocation(query, limit = 5){
 function getCurrentWeather({arguments}) {
     return fetch(`https://api.openweathermap.org/data/3.0/onecall?lat=${arguments.lat}&lon=${arguments.lon}&units=${'imperial'}&appid={API_KEY}`)
 }
-//A function that returns a promise. The promise is a fetch to api geolocator
-function createWeatherDisplay(location){
+
+function addToHistory(location) {
     var searchHistory = localStorage.getItem('history')
     if (searchHistory) {
         searchHistory = JSON.parse(searchHistory)
+        for(var i = 0; i < searchHistory; i++) {
+            if (searchHistory[i] === location) {
+            return
+            }
+        }
         searchHistory.push(location)
         localStorage.setItem('history', JSON.stringify(searchHistory))
     } else {
         searchHistory = (location)
         localStorage.setItem('history', JSON.stringify(searchHistory))
     }
-    getGeoLocation('Irvine')
+}
+
+//A function that returns a promise. The promise is a fetch to api geolocator
+function createWeatherDisplay(location){
+    getGeoLocation(location)
     .then(function(response) {
         return response.json()
     })
@@ -75,6 +85,7 @@ function createWeatherDisplay(location){
                 document.body.appendChild(weatherPicture)
                 document.appendChild(currentWeatherStatement)
                 console.log(JSON.stringify(data, null, 2))
+                addToHistory(location)
             })
             .catch(error => {
                 console.log(error.message)
