@@ -12,11 +12,11 @@ var prevCity = document.getElementById('history');
 
 //function to grab location from API Key
 function getGeoLocation(query, limit = 5){
-    return fetch('http://api.openweathermap.org/geo/1.0/direct?q=${query}&limit={limit}&appid=${API_KEY}')
+    return fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${query}&limit=${limit}&appid=${API_KEY}`)
 }
 
-function getCurrentWeather({lat, lon, units}) {
-    return fetch('https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon={lon}&units=${units}&appid={API_KEY}')
+function getCurrentWeather({arguments}) {
+    return fetch(`https://api.openweathermap.org/data/3.0/onecall?lat=${arguments.lat}&lon=${arguments.lon}&units=${'imperial'}&appid={API_KEY}`)
 }
 
 
