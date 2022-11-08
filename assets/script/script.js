@@ -16,6 +16,7 @@ var temp = document.getElementById('#temp');
 var wind = document.getElementById('#wind');
 var humidity = document.getElementById('#humidity');
 var historyCity = document.getElementById('#history-city')
+var weatherPicture = document.getElementById('#icon')
 
 input.addEventListener('keyup', function(event){
     if(event.key === 'Enter') {
@@ -84,14 +85,27 @@ function createWeatherDisplay(location){
             .then(weatherResponse => weatherResponse.json())
             .then(weatherData => {
                 //This following function will display the weather icon and basic despription of current weather
-                var weatherPicture = document.createElement('img')
-                weatherPicture.src = `http://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`
-                var currentWeatherStatement = document.createElement('p')
-                currentWeatherStatement.textContent = `${weatherData.weather[0].main}: it is currently ${weatherData.weather[0].description}`
+                //var weatherPicture = document.createElement('img')
+                //weatherPicture.src = `http://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`
+                //var currentWeatherStatement = document.createElement('p')
+                //currentWeatherStatement.textContent = `${weatherData.weather[0].main}: it is currently ${weatherData.weather[0].description}`
                 //document.body.appendChild(weatherPicture)
                 //document.appendChild(currentWeatherStatement)
-                console.log(JSON.stringify(data, null, 2))
+                var tempValue = data.current.temp;
+                var windValue = data.current.wind;
+                var humidityValue = data.current.humidity;
+                var weatherValue = data.current.weather[0].icon;
+                var weatherIcon = `http://openweathermap.org/img/wn/${weatherPicture}@2x.png`;
+                console.log(JSON.stringify(data, null, 2));
                 addToHistory(location)
+
+                displayWeather(
+                    tempValue,
+                    windValue, 
+                    humidityValue,
+                    weatherPicture,
+                    icon,
+                )
             })
             .catch(error => {
                 document.body.textContent = error.message
@@ -103,6 +117,18 @@ function createWeatherDisplay(location){
     });
 }
 
+
+function displayWeather (
+    tempValue,
+    windValue, 
+    humidityValue,
+    weatherIcon,
+) {
+    temp.textContent = tempValue;
+    wind.textContent = windValue;
+    humidity.textContent = humidityValue;
+    icon.src = weatherIcon;
+}
 
 //Criteria
 // I want to see the weather outlook for multiple cities
