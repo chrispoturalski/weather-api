@@ -11,16 +11,19 @@ var colRight = document.getElementById('column-right');
 var prevCity = document.getElementById('history');
 var input = document.querySelector('#input');
 var searchNow = document.querySelector('#search-now')
-var city = document.getElementById('#city');
-var temp = document.getElementById('#temp');
-var wind = document.getElementById('#wind');
-var humidity = document.getElementById('#humidity');
-var historyCity = document.getElementById('#history-city')
-var weatherPicture = document.getElementById('#icon')
+var city = document.getElementById('city');
+var temp = document.getElementById('temp');
+var wind = document.getElementById('wind');
+var humidity = document.getElementById('humidity');
+var historyCity = document.getElementById('history-city')
+var weatherPicture = document.getElementById('icon')
+var lat 
+var lon 
 
 input.addEventListener('keyup', function(event){
     if(event.key === 'Enter') {
         createWeatherDisplay(event.target.value)
+        createFiveDayDisplay(lat,lon)
     }
 })
 
@@ -41,6 +44,7 @@ for (var i = 0; i < previousSearchHistory.length; i++) {
 }
 
 var API_KEY = 'fb504c3aaa39e72e8534a9c4c32fcd83'
+var API_KEY2 = '5730973d5137765ea7c5d5fbd6673cec'
 
 //function to grab location from API Key
 function getGeoLocation(query, limit = 5) {
@@ -51,6 +55,14 @@ function getGeoLocation(query, limit = 5) {
     return fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${arguments.lat}&lon=${arguments.lon}&units=${'imperial'}&appid=${API_KEY}`)
   }
 
+  function getFiveDayForecast(arguments) {
+    return fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${arguments.lat}&lon=${arguments.lon}&appid=${API_KEY2}`,{
+        headers : { 
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+           }
+    })
+  }
 function addToHistory(location) {
     var searchHistory = localStorage.getItem('history')
     if (searchHistory) {
@@ -60,7 +72,7 @@ function addToHistory(location) {
             return
             }
         }
-        searchHistory.push(location)
+        //searchHistory.push(location)
         localStorage.setItem('history', JSON.stringify(searchHistory))
     } else {
         searchHistory = (location)
@@ -75,15 +87,20 @@ function createWeatherDisplay(location){
         return response.json()
     })
     .then(data => {
-        console.log(data)
+        //console.log(data)
         if (data.length === 0) {
             var errorEl = document.createElement('p')
             errorEl.textContent = `We couldn't find ${location}`
             document.body.appendChild(errorEl)
         } else {
+            //console.log(getFiveDayForecast())
+            //console.log(data[0].lon)
+            lat = data[0].lat
+            lon = data[0].lon
             getCurrentWeather ({ lat: data[0].lat, lon: data[0].lon })
             .then(weatherResponse => weatherResponse.json())
             .then(weatherData => {
+                
                 //This following function will display the weather icon and basic despription of current weather
                 //var weatherPicture = document.createElement('img')
                 //weatherPicture.src = `http://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`
@@ -91,20 +108,21 @@ function createWeatherDisplay(location){
                 //currentWeatherStatement.textContent = `${weatherData.weather[0].main}: it is currently ${weatherData.weather[0].description}`
                 //document.body.appendChild(weatherPicture)
                 //document.appendChild(currentWeatherStatement)
-                var tempValue = data.current.temp;
-                var windValue = data.current.wind;
-                var humidityValue = data.current.humidity;
-                var weatherValue = data.current.weather[0].icon;
-                var weatherIcon = `http://openweathermap.org/img/wn/${weatherPicture}@2x.png`;
-                console.log(JSON.stringify(data, null, 2));
+                var tempValue = weatherData.main.temp;
+                var windValue = weatherData.wind.speed;
+                var humidityValue = weatherData.main.humidity;
+                //console.log(weatherData)
+                //var weatherValue = //weatherData.main.temp;
+                //var weatherIcon = `http://openweathermap.org/img/wn/${weatherPicture}@2x.png`;
+                //console.log(JSON.stringify(data, null, 2));
                 addToHistory(location)
-
+                //console.log(tempValue)
                 displayWeather(
                     tempValue,
                     windValue, 
                     humidityValue,
-                    weatherPicture,
-                    icon,
+                    //weatherPicture,
+                    //icon,
                 )
             })
             .catch(error => {
@@ -117,18 +135,27 @@ function createWeatherDisplay(location){
     });
 }
 
+function createFiveDayDisplay(lat,lon){
+   getFiveDayForecast({ lat:lat, lon: lon })
+    .then(data => data.json())
+    .then(data => {
+    console.log(data)
+    })
+}
+
 
 function displayWeather (
     tempValue,
     windValue, 
     humidityValue,
-    weatherIcon,
+    //weatherIcon,
 ) {
-    temp.textContent = tempValue;
+    temp.innerHTML = tempValue;
     wind.textContent = windValue;
     humidity.textContent = humidityValue;
-    icon.src = weatherIcon;
+    //icon.src = weatherIcon;
 }
+
 
 //Criteria
 // I want to see the weather outlook for multiple cities

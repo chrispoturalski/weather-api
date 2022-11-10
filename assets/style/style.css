@@ -11,8 +11,8 @@
 }
 
 body {
-    background: url("../pictures/newskyline.png") no-repeat center center fixed;
-    background-size: cover;
+    /*background: url("../pictures/newskyline.png") no-repeat center center fixed;
+    */background-size: cover;
 }
 
 .title h1 {
