@@ -126,9 +126,23 @@ button:active {
     margin-left: auto;
     margin-right: auto;
     padding: 3px;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: var(--fourth);
     color: var(--tertiary);
     font-size: 48px;
+    text-align: center;
+    border-color: var(--tertiary);
+    border-radius: 10px 10px 10px 10px;
+    border-style: solid;
+    border-width: 1px;
+}
+.current-city p {
+    display: table;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 3px;
+    background-color: var(--fourth);
+    color: var(--tertiary);
+    font-size: 28px;
     text-align: center;
     border-color: var(--tertiary);
     border-radius: 10px 10px 10px 10px;

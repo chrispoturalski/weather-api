@@ -23,7 +23,6 @@ var lon
 input.addEventListener('keyup', function(event){
     if(event.key === 'Enter') {
         createWeatherDisplay(event.target.value)
-        createFiveDayDisplay(lat,lon)
     }
 })
 
@@ -48,14 +47,14 @@ var API_KEY2 = '5730973d5137765ea7c5d5fbd6673cec'
 
 //function to grab location from API Key
 function getGeoLocation(query, limit = 5) {
-    return fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${query}&limit=${limit}&appid=${API_KEY}`)
+    return fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${query}&limit=${limit}&appid=${API_KEY}`)
   }
 
   function getCurrentWeather(arguments) {
     return fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${arguments.lat}&lon=${arguments.lon}&units=${'imperial'}&appid=${API_KEY}`)
   }
 
-  function getFiveDayForecast(arguments) {
+  function getFiveDayDisplay(arguments) {
     return fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${arguments.lat}&lon=${arguments.lon}&appid=${API_KEY2}`,{
         headers : { 
             'Content-Type': 'application/json',
@@ -100,30 +99,37 @@ function createWeatherDisplay(location){
             getCurrentWeather ({ lat: data[0].lat, lon: data[0].lon })
             .then(weatherResponse => weatherResponse.json())
             .then(weatherData => {
-                
-                //This following function will display the weather icon and basic despription of current weather
-                //var weatherPicture = document.createElement('img')
-                //weatherPicture.src = `http://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`
-                //var currentWeatherStatement = document.createElement('p')
-                //currentWeatherStatement.textContent = `${weatherData.weather[0].main}: it is currently ${weatherData.weather[0].description}`
-                //document.body.appendChild(weatherPicture)
-                //document.appendChild(currentWeatherStatement)
                 var tempValue = weatherData.main.temp;
                 var windValue = weatherData.wind.speed;
                 var humidityValue = weatherData.main.humidity;
-                //console.log(weatherData)
-                //var weatherValue = //weatherData.main.temp;
-                //var weatherIcon = `http://openweathermap.org/img/wn/${weatherPicture}@2x.png`;
-                //console.log(JSON.stringify(data, null, 2));
                 addToHistory(location)
-                //console.log(tempValue)
                 displayWeather(
+                    location,
                     tempValue,
                     windValue, 
                     humidityValue,
-                    //weatherPicture,
-                    //icon,
                 )
+ 
+                 function displayWeather (
+                     location,
+                     tempValue,
+                     windValue, 
+                     humidityValue,
+                     //weatherIcon,
+                 ) {
+                     city.textContent = `${location}`
+                     temp.textContent = `Temp: ${tempValue} F`
+                     wind.textContent = `Wind: ${windValue} MPH`
+                     humidity.textContent = `Humidity: ${humidityValue}`
+                     //icon.src = weatherIcon;
+                 }
+                 function createFiveDayDisplay(lat,lon){
+                    getFiveDayDisplay({ lat:lat, lon: lon })
+                     .then(data => data.json())
+                     .then(data => {
+                    
+                    })
+                 }
             })
             .catch(error => {
                 document.body.textContent = error.message
@@ -135,38 +141,3 @@ function createWeatherDisplay(location){
     });
 }
 
-function createFiveDayDisplay(lat,lon){
-   getFiveDayForecast({ lat:lat, lon: lon })
-    .then(data => data.json())
-    .then(data => {
-    console.log(data)
-    })
-}
-
-
-function displayWeather (
-    tempValue,
-    windValue, 
-    humidityValue,
-    //weatherIcon,
-) {
-    temp.innerHTML = tempValue;
-    wind.textContent = windValue;
-    humidity.textContent = humidityValue;
-    //icon.src = weatherIcon;
-}
-
-
-//Criteria
-// I want to see the weather outlook for multiple cities
-// GIVEN a weather dashboard with form input
-//When I search for a city
-//Then I am presented with current and future conditions for that city and 
-// (cont.) this city is added to the search history
-//Then I am presented with the city name, the date, an icon representation
-// (cont.) of weather cond., temp, humid, and wind speed
-//When I view the weather conditions for that city
-//Then I am presented with a 5-day forecast that displays the date, an icon
-//represenation of weather conditions, the temp, wind speed, and humidity
-//When I click on a city in the search history
-//Then I am again presented with current and future conditions for that city
