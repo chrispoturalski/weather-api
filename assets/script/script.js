@@ -9,8 +9,11 @@ var curCity = document.getElementById("current-city");
 var forecast = document.getElementById("forecast");
 var colRight = document.getElementById("column-right");
 var prevCity = document.getElementById("history");
+var fiveDate = document.getElementById("five-day-date")
+var fiveTemp = document.getElementById("five-day-temp")
+var fiveWind = document.getElementById("five-day-wind")
+var fiveHumidity = document.getElementById("five-day-humidity")
 var input = document.querySelector("#input");
-var searchNow = document.querySelector("#search-now");
 var city = document.getElementById("city");
 var temp = document.getElementById("temp");
 var wind = document.getElementById("wind");
@@ -20,31 +23,39 @@ var weatherPicture = document.getElementById("icon");
 var lat;
 var lon;
 
+//event listener for the search bar
 input.addEventListener("keyup", function (event) {
   if (event.key === "Enter") {
     createWeatherDisplay(event.target.value);
   }
 });
 
+
+//function to display the five day weather
 function displayFiveDay(arr) {
   forecast.innerHTML = "";
   for (var i = 0; i < arr.length; i++) {
-    var newH4 = document.createElement("h4");
-    newH4.textContent = "Date: " + arr[i].dt_txt;
-    forecast.append(newH4);
-    var newH4 = document.createElement("h4");
-    newH4.textContent = "Temp: " + arr[i].main.temp;
-    forecast.append(newH4);
-    var newH4 = document.createElement("h4");
-    newH4.textContent = "Wind: " + arr[i].wind.speed;
-    forecast.append(newH4);
-    var newH4 = document.createElement("h4");
-    newH4.textContent = "Humidity: " + arr[i].main.humidity;
-    forecast.append(newH4);
+    var fiveDate = document.createElement("h4");
+    fiveDate.setAttribute("class", "five-date");
+    fiveDate.textContent = "Date: " + arr[i].dt_txt.substring(0,10);
+    //forecast.append(fiveDate);
+    var fiveTemp = document.createElement("h4");
+    fiveTemp.setAttribute("class", "five-temp")
+    fiveTemp.textContent = "Temp: " + arr[i].main.temp + " \xB0F";
+    //forecast.append(fiveTemp);
+    var fiveWind = document.createElement("h4");
+    fiveWind.setAttribute("class", "five-wind")
+    fiveWind.textContent = "Wind: " + arr[i].wind.speed + " MPH";
+    //forecast.append(fiveWind);
+    var fiveHumid = document.createElement("h4");
+    fiveHumid.setAttribute("class", "five-humid")
+    fiveHumid.textContent = "Humidity: " + arr[i].main.humidity + "%";
+    forecast.append(fiveDate, fiveTemp, fiveWind, fiveHumid);
     console.log(arr);
   }
 }
 
+//adding items to locale storage
 var previousSearchHistory = localStorage.getItem("history");
 if (previousSearchHistory) {
   previousSearchHistory = JSON.parse(previousSearchHistory);
@@ -65,7 +76,7 @@ function showHistory() {
   }
 }
 
-showHistory();
+//showHistory();
 
 var API_KEY = "fb504c3aaa39e72e8534a9c4c32fcd83";
 var API_KEY2 = "5730973d5137765ea7c5d5fbd6673cec";
@@ -94,8 +105,10 @@ function addToHistory(location) {
   var searchHistory = localStorage.getItem("history")
   if (searchHistory) {
     searchHistory = JSON.parse(searchHistory)
-    if (searchHistory.includes(location)) {
-        return
+    for (var i = 0; i < searchHistory.length; i++) {
+        if (searchHistory[i] === location) {
+            return
+        }
     }
     searchHistory.push(location)
     localStorage.setItem("history", JSON.stringify(searchHistory))
@@ -135,9 +148,9 @@ function createWeatherDisplay(location) {
               humidityValue
             ) {
               city.textContent = `${location}`;
-              temp.textContent = `Temp: ${tempValue} F`;
+              temp.textContent = `Temp: ${tempValue} °F`;
               wind.textContent = `Wind: ${windValue} MPH`;
-              humidity.textContent = `Humidity: ${humidityValue}`;
+              humidity.textContent = `Humidity: ${humidityValue}%`;
             }
           })
           .catch((error) => {
@@ -154,8 +167,8 @@ function createWeatherDisplay(location) {
               }
             }
             displayFiveDay(filteredArray);
-            addToHistory();
-            showHistory();
+            addToHistory(location);
+            
           });
       }
     })
@@ -164,3 +177,4 @@ function createWeatherDisplay(location) {
       document.body.textContent = error.message;
     });
 }
+showHistory();

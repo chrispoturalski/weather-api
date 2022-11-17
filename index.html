@@ -19,11 +19,7 @@
             <div class="search">
                 <h2>Search City</h3>
                 <input type="text" id="input" placeholder="City Name ..." size="30">
-                <button id="search-now">Search Now</button>
             </div>
-        </div>
-        
-        <div class="column-middle">
             <div class="current-city">
                 <h3 id="city"></h3>
                 <img id="icon">
@@ -31,9 +27,18 @@
                 <p id="wind">Wind: </p>
                 <p id="humidity">Humidity: </p>
             </div>
+        </div>
+        
+        <div class="column-middle">
+            
             <h3>5 Day Forecast</h3>
             <div id="forecast">
-
+                <div class="five-forecast">
+                    <p id="five-day-date"></p>
+                    <p id="five-day-temp"></p>
+                    <p id="five-day-wind"></p>
+                    <p id="five-day-humidity"></p>
+                </div>
             </div>
         </div>
         
@@ -49,7 +54,8 @@
         
 
        
-
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 
         <script src="./assets/script/script.js"></script> 
     </body>

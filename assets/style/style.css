@@ -150,6 +150,13 @@ h3 {
     border-width: 1px;
 }
 
+#forecast {
+    border: 4px solid var(--primary);
+    display: flex;
+    flex-direction: c;
+    
+}
+
 .forecast h3 {
     display: table;
     margin-left: auto;
@@ -165,6 +172,46 @@ h3 {
     border-width: 1px;
 }
 
-h4 {
-    color: var(--primary);
+.five-forecast {
+    
 }
+
+h4 {
+    display: grid;
+    color: var(--tertiary);
+    font-size: 18px;
+}
+
+.five-date {
+    color: var(--primary);
+    display:table-row-group;
+
+}
+
+.five-temp {
+    color: var(--tertiary);
+    
+
+}
+
+.five-wind {
+    color: var(--primary);
+    
+
+}
+
+.five-humid {
+    color: var(--tertiary);
+    
+
+}
+
+@media screen and (max-width: 600px) {
+    
+  }
+
+  @media screen and (max-width: 250px) {
+    .column {
+      width: 100%;
+    }
+  }
