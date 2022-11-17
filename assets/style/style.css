@@ -11,8 +11,8 @@
 }
 
 body {
-    /*background: url("../pictures/newskyline.png") no-repeat center center fixed;
-    */background-size: cover;
+    background: url("../pictures/newskyline.png") no-repeat center center fixed;
+    background-size: cover;
 }
 
 .title h1 {
@@ -106,7 +106,7 @@ button:active {
     color: var(--fourth);
 }
 
-.history h3 {
+h3 {
     display: table;
     margin-left: auto;
     margin-right: auto;
@@ -127,7 +127,7 @@ button:active {
     margin-right: auto;
     padding: 3px;
     background-color: var(--fourth);
-    color: var(--tertiary);
+    color: var(--primary);
     font-size: 48px;
     text-align: center;
     border-color: var(--tertiary);
@@ -163,4 +163,8 @@ button:active {
     border-radius: 10px 10px 10px 10px;
     border-style: solid;
     border-width: 1px;
+}
+
+h4 {
+    color: var(--primary);
 }
