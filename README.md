@@ -35,8 +35,8 @@ N/a
 # Mock-UP
 
 Please refer to the follow images for a mockup of my results:
-![portfolio]()
-![portfolio]()
+![portfolio](./assets/pictures/before.png)
+![portfolio](./assets/pictures/after.png)
 
 # Website Link
 https://chrispoturalski.github.io/weather-api/
