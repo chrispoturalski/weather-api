@@ -35,20 +35,21 @@ input.addEventListener("keyup", function (event) {
 function displayFiveDay(arr) {
   forecast.innerHTML = "";
   for (var i = 0; i < arr.length; i++) {
+    var fiveDayCards = document.createElement('div')
     var fiveDate = document.createElement("h4");
-    fiveDate.setAttribute("class", "five-date");
-    fiveDate.textContent = "Date: " + arr[i].dt_txt.substring(0,10);
+    fiveDate.setAttribute("id", "five-date");
+    fiveDate.textContent = arr[i].dt_txt.substring(0,10);
     //forecast.append(fiveDate);
     var fiveTemp = document.createElement("h4");
-    fiveTemp.setAttribute("class", "five-temp")
+    fiveTemp.setAttribute("id", "five-temp")
     fiveTemp.textContent = "Temp: " + arr[i].main.temp + " \xB0F";
     //forecast.append(fiveTemp);
     var fiveWind = document.createElement("h4");
-    fiveWind.setAttribute("class", "five-wind")
+    fiveWind.setAttribute("id", "five-wind")
     fiveWind.textContent = "Wind: " + arr[i].wind.speed + " MPH";
     //forecast.append(fiveWind);
     var fiveHumid = document.createElement("h4");
-    fiveHumid.setAttribute("class", "five-humid")
+    fiveHumid.setAttribute("id", "five-humid")
     fiveHumid.textContent = "Humidity: " + arr[i].main.humidity + "%";
     forecast.append(fiveDate, fiveTemp, fiveWind, fiveHumid);
     console.log(arr);
